@@ -5,9 +5,9 @@ from pageObjects.ecommercePage import EcommercePage
 
 
 @given('I open Ecommerce page')
-#Tell it to run the setupBrowserInstance fixture by passing as a parmeter
+#Tell it to run the setupBrowserInstance fixture by passing as a parameter
 def open_EcommercePage(setupBrowserInstance):
-    #setupBrowserInstance yields both page and and baseURL
+    #setupBrowserInstance yields both page and baseURL
     page, baseURL = setupBrowserInstance
 
     #Create page object instance, it takes both page and baseURL as parameters

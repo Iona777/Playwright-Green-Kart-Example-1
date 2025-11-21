@@ -1,6 +1,9 @@
 from pytest_bdd import scenario
 
 
-@scenario("features/eCommerce.feature", "End to end Ecommerce Validation")
+@scenario("features/eCommerce.feature", "Ecommerce products delivery")
 def test_ecommerce():
     pass
+
+
+

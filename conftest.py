@@ -39,6 +39,7 @@ def setupBrowserInstance(playwright:Playwright, request):
     context = browser.new_context()
     page = context.new_page()
 
+
     # This will return the page then it will stop (give way, yield) until the calling test completes.
     # Then it will run any steps that are after this line. In this way it performs tearDown steps.
     # Yield both page and baseUrl so that baseUrl can be set from command line for different environments

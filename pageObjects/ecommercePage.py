@@ -1,3 +1,5 @@
+import time
+
 from playwright.sync_api import Playwright, Page
 
 
@@ -15,19 +17,29 @@ class EcommercePage:
 
 
 
-    def selectAnItem(self,playwright:Playwright ,itemText):
+    def selectAnItem(self,itemText):
         #Get all the products
-        itemLocatorProductClasses = "[class='product-name']"
-
+        #Need to get the product class, not the product-name class as we need to be high enough up
+        # the hierarchy for it to also contain te button that we access in a few lines time.
+        itemLocatorProductClasses = "[class='product']"
         products = self.page.locator(itemLocatorProductClasses)
-        item = products.get_by_text(itemText)
 
-        # Assert uniqueness
+        #Now we filter that list on the text of the item we are looking for.
+        # We do NOT use item = products.get_by_text(itemText) as this will return the node (element) that
+        #contains the text rather than by filtering the list of product elements by the text.
+        item = products.filter(has_text=itemText)
+
+        # Assert uniqueness, not sure we really need this, but it is code AI gave.
         count = item.count()
         assert count == 1, f"Expected exactly 1 product named '{itemText}', found {count}"
 
-        AddButton = item.get_by_role("Button", name="ADD TO CART")
+        #We use the item parent node as starting point for looking for the button
+        AddButton = item.get_by_role("button", name="ADD TO CART")
         AddButton.click()
+
+        #For debugging. Remove later
+        time.sleep(2)
+
 
 
 

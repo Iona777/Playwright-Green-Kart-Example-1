@@ -1,6 +1,7 @@
 import pytest
 from playwright.sync_api import Playwright
 from collections import namedtuple
+from pageObjects.ecommercePage import EcommercePage
 
 #This is a list the Python module paths to of all your stepDef files.
 #Each string like "stepDefs.loginPageStepDef" refers to a Python module that is
@@ -14,6 +15,8 @@ pytest_plugins = [
 
 ]
 
+#Makes this available for sharing data throughout the current scenario, if requuired.
+scenario_context = {}
 
 
 #Help is optional text to help the user.
@@ -25,6 +28,7 @@ def pytest_addoption(parser):
 #This is like setting up your driver.
 @pytest.fixture
 def setupBrowserInstance(playwright:Playwright, request):
+
     # This will get the option given in the command line.
     browserName = request.config.getoption("browserName")
     baseUrl = request.config.getoption("baseUrl")
@@ -38,7 +42,6 @@ def setupBrowserInstance(playwright:Playwright, request):
         
     context = browser.new_context()
     page = context.new_page()
-
 
     # This will return the page then it will stop (give way, yield) until the calling test completes.
     # Then it will run any steps that are after this line. In this way it performs tearDown steps.
@@ -57,6 +60,17 @@ def setupBrowserInstance(playwright:Playwright, request):
     # pytest test_testFileName.py --browser_name chrome
     # or like this if passing in base_url too
     # pytest test_testFileName.py - -browser_name chrome --base_url https: // rahulshettyacademy.com
+
+
+@pytest.fixture
+#Calls the EcommercePage constructor and returns an instance of the page object.
+#This constructor also needs the baseURL which is local to the setupBrowserInstance() method.
+# So, create a class variable dictionary,scenario_context, and pass the data around that way
+def getEcommercePage(setupBrowserInstance):
+    localBrowserInstance = setupBrowserInstance
+    return EcommercePage(localBrowserInstance.page, localBrowserInstance.baseUrl)
+
+#Add similar for the other pages as required.
 
 
 

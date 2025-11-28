@@ -1,46 +1,21 @@
-from pytest_bdd import given, when, parsers
+import time
 
-from conftest import setupBrowserInstance
+from pytest_bdd import given, when, parsers
 from pageObjects.ecommercePage import EcommercePage
 
 
 @given('I open Ecommerce page')
 #Tell it to run the setupBrowserInstance fixture by passing as a parameter
-def open_EcommercePage(setupBrowserInstance):
-    #setupBrowserInstance yields both page and baseURL
-    page, baseURL = setupBrowserInstance
+#def open_EcommercePage(setupBrowserInstance, getEcommercePage): might not need this now
+def open_EcommercePage(getEcommercePage: EcommercePage):
+    #Get page object instance from the getEcommercePage fixture
+    getEcommercePage.navigateToEcommercePage()
 
-    #Create page object instance, it takes both page and baseURL as parameters
-    ecommercePage = EcommercePage(page, baseURL)
-    ecommercePage.navigateToEcommercePage()
-
-    #Could look into putting ecommercePage into sharedDate or similar so we do not need to keep recreating it
 
 @when(parsers.parse('I add items {item1} and {item2} to Cart'))
-
-
-#@when(parsers.parse( 'I login to the portal with {username} and {password}'))
-def addItemsToCart(item1, item2,setupBrowserInstance):
-    #setupBrowserInstance will yield BrowserInstance(page,baseUrl)
-    # which is a named tuple containing page and baseUrl.
-    BrowserInstance = setupBrowserInstance
-    page = BrowserInstance.page
-    baseURl = BrowserInstance.baseUrl
-
-    ecommercePage = EcommercePage(page, baseURl)
-    ecommercePage.selectAnItem(item1)
-    ecommercePage.selectAnItem(item2)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#By explicitly annotating the  fixture parameter (getEcommercePage) with the page object type (EcommercePage)
+#Then the IDE knows that getEcommercePage is an EcommercePage
+#By done the same for item1 and item2 to tell the IDE they are strings, you get prompts for string methods
+def addItemsToCart(item1: str, item2:str, getEcommercePage: EcommercePage):
+    getEcommercePage.selectAnItem(item1)
+    getEcommercePage.selectAnItem(item2)

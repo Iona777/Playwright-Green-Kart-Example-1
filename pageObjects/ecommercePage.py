@@ -2,9 +2,7 @@ import time
 
 from playwright.sync_api import Playwright, Page
 
-
 class EcommercePage:
-
     #When page instance is created, we will get these parameters passed in
     #By importing Page and including page:Page instead of just page, we will not get a list of available
     # methods for Page.
@@ -14,8 +12,6 @@ class EcommercePage:
 
     def navigateToEcommercePage(self):
         self.page.goto(self.baseUrl + "seleniumPractise/#/")
-
-
 
     def selectAnItem(self,itemText):
         #Get all the products

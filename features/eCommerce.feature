@@ -5,7 +5,8 @@ Feature: End to end Ecommerce Validation
     Scenario Outline: Ecommerce products delivery
     Given I open Ecommerce page
     When I add items <item1> and <item2> to Cart
-    And validate the total prices
+    And I proceed to the checkout
+    Then I validate the total prices
     #Then select the country submit and verify Thank You message
       Examples:
       |item1      |item2 |

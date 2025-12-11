@@ -1,6 +1,7 @@
 import time
+from platform import AndroidVer
 
-from pytest_bdd import given, when, parsers
+from pytest_bdd import given, when, then, parsers
 from pageObjects.ecommercePage import EcommercePage
 
 
@@ -19,3 +20,21 @@ def open_EcommercePage(getEcommercePage: EcommercePage):
 def addItemsToCart(item1: str, item2:str, getEcommercePage: EcommercePage):
     getEcommercePage.selectAnItem(item1)
     getEcommercePage.selectAnItem(item2)
+
+#Looks like playwright BDD does not recognise 'and' so just use whatever the previous like had
+@when('I proceed to the checkout')
+def proceedToCheckout(getEcommercePage: EcommercePage):
+    getEcommercePage.selectBasket()
+
+
+@then('I validate the total prices')
+#Might want to create a different page object for this later
+def validatePrices(getEcommercePage: EcommercePage):
+    getEcommercePage.getTotalPrice()
+    # For debugging. Remove later
+    time.sleep(2)
+
+
+
+
+

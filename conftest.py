@@ -2,6 +2,7 @@ import pytest
 from playwright.sync_api import Playwright
 from collections import namedtuple
 from pageObjects.ecommercePage import EcommercePage
+from utilities.common import  Common
 
 #This is a list the Python module paths to of all your stepDef files.
 #Each string like "stepDefs.loginPageStepDef" refers to a Python module that is
@@ -69,6 +70,12 @@ def setupBrowserInstance(playwright:Playwright, request):
 def getEcommercePage(setupBrowserInstance):
     localBrowserInstance = setupBrowserInstance
     return EcommercePage(localBrowserInstance.page, localBrowserInstance.baseUrl)
+
+#Calls the Common constructor and returns an instance of the Common class.
+@pytest.fixture
+def getCommonClass(setupBrowserInstance):
+    localBrowserInstance = setupBrowserInstance
+    return  Common(localBrowserInstance.page)
 
 #Add similar for the other pages as required.
 

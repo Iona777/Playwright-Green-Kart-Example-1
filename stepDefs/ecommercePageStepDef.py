@@ -2,7 +2,11 @@ import time
 from platform import AndroidVer
 
 from pytest_bdd import given, when, then, parsers
+
+from conftest import getCommonClass
 from pageObjects.ecommercePage import EcommercePage
+from utilities.common import Common
+
 
 
 @given('I open Ecommerce page')
@@ -29,8 +33,17 @@ def proceedToCheckout(getEcommercePage: EcommercePage):
 
 @then('I validate the total prices')
 #Might want to create a different page object for this later
-def validatePrices(getEcommercePage: EcommercePage):
+def validatePrices(getEcommercePage: EcommercePage, getCommonClass: Common):
+
+
+    #This is just here as an example of how to call a method from the Common class in utilities.common
+    #The getCommonClass fixture returns an instance of Common in the same way as getEcommercePage returns
+    # an instance of the EcommercePage class.
+    text =  getCommonClass.getNthColumnOfNthRow("[class='cartTable'] tr",1,1)
+    print("Text is: "+ text)
+
     getEcommercePage.getTotalPrice()
+
     # For debugging. Remove later
     time.sleep(2)
 

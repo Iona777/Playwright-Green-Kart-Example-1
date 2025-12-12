@@ -7,7 +7,7 @@ Feature: End to end Ecommerce Validation
     When I add items <item1> and <item2> to Cart
     And I proceed to the checkout
     Then I validate the total prices
-    #Then select the country submit and verify Thank You message
+    Then select the country submit and verify Thank You message
       Examples:
       |item1      |item2 |
       |Beetroot  |Tomato |

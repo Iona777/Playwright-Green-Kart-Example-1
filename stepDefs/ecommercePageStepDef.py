@@ -44,8 +44,17 @@ def validatePrices(getEcommercePage: EcommercePage, getCommonClass: Common):
 
     getEcommercePage.getTotalPrice()
 
+@then('select the country submit and verify Thank You message')
+def placeOrderAndSelectCountry(getEcommercePage:EcommercePage):
+    getEcommercePage.clickPlaceOrderButton()
+    getEcommercePage.selectCountry()
+
+
     # For debugging. Remove later
     time.sleep(2)
+
+
+
 
 
 

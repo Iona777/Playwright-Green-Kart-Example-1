@@ -8,19 +8,18 @@ class EcommercePage:
     #By importing Page and including page:Page instead of just page, we will not get a list of available
     # methods for Page.
 
-
-    def __init__(self,page:Page,baseUrl):
+    def __init__(self, page: Page, baseUrl):
         self.page = page
         self.baseUrl = baseUrl
         #Locators
         self.basketIcon = self.page.locator("[class='cart-icon']")
         self.proceedToCheckoutIcon = self.page.get_by_role("button", name="PROCEED TO CHECKOUT")
-
+        self.placeOrderButton = self.page.get_by_role("button", name="Place Order")
 
     def navigateToEcommercePage(self):
         self.page.goto(self.baseUrl + "seleniumPractise/#/")
 
-    def selectAnItem(self,itemText):
+    def selectAnItem(self, itemText):
         #Get all the products
         #Need to get the product class, not the product-name class as we need to be high enough up
         # the hierarchy for it to also contain te button that we access in a few lines time.
@@ -33,7 +32,6 @@ class EcommercePage:
         #contains the text rather than by filtering the list of product elements by the text.
         item = products.filter(has_text=itemText)
         print("Type of item is ", type(item))
-
 
         # Assert uniqueness, not sure we really need this, but it is code AI gave.
         count = item.count()
@@ -48,14 +46,10 @@ class EcommercePage:
         self.basketIcon.click()
         self.proceedToCheckoutIcon.click()
 
-
-
-
     def getTotalPrice(self):
         #Wait for the table to be rendered. While Playwright will for elements to be ready before
         # interacting with them, getting the count does not qualify as interaction, so it does not wait automatically.
         self.page.wait_for_selector("[class='cartTable'] tr")
-
 
         #How to get the contents of nth row of a table:
         #Find all the rows in the given table and store in a variable, e.g. 'rows'
@@ -81,9 +75,9 @@ class EcommercePage:
 
         #Can't use 'for item in rows' as rows is a selector, not a list.
         #This is equivalent of for i=1 to count;i++
-        for i in range(1,count): # skip header row
+        for i in range(1, count):  # skip header row
             #get the 3rd column value
-            theRow =rows.nth(i)
+            theRow = rows.nth(i)
             price_text = theRow.locator("td").nth(3).text_content().strip()
             print(f"Column text is {price_text}")
             #Need to convert from a string to a number
@@ -97,33 +91,15 @@ class EcommercePage:
         #If the text contained a currency symbol, then you could strip it out like this:
         #displayedTotalPrice_text = displayedTotalPrice_text.replace("£", "").strip()
 
-        displayedTotalPrice= float(displayedTotalPrice_text)
+        displayedTotalPrice = float(displayedTotalPrice_text)
 
         print(f"Calculated total price is {totalPrice} and displayed total prices is {displayedTotalPrice}")
         assert totalPrice == displayedTotalPrice, \
             (f"Displayed total {displayedTotalPrice} does not match calculated {totalPrice}")
 
+    def clickPlaceOrderButton(self):
+        self.placeOrderButton.click()
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    #Parameterise this later
+    def selectCountry(self):
+        self.page.select_option("div select", "Albania")

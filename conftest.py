@@ -2,6 +2,7 @@ import pytest
 from playwright.sync_api import Playwright
 from collections import namedtuple
 from pageObjects.ecommercePage import EcommercePage
+from pageObjects.shoppingLoginPage import ShoppingLoginPage
 from utilities.common import  Common
 
 #This is a list the Python module paths to of all your stepDef files.
@@ -12,11 +13,12 @@ from utilities.common import  Common
 # __init__.py file, which can be blank.
 
 pytest_plugins = [
-    "stepDefs.ecommercePageStepDef"
+    "stepDefs.ecommercePageStepDef",
+    "stepDefs.shoppingPageStepDef"
 
 ]
 
-#Makes this available for sharing data throughout the current scenario, if requuired.
+#Makes this available for sharing data throughout the current scenario, if required.
 scenario_context = {}
 
 
@@ -78,6 +80,12 @@ def getCommonClass(setupBrowserInstance):
     return  Common(localBrowserInstance.page)
 
 #Add similar for the other pages as required.
+
+def getShoppingLoginPage(setupBrowserInstance):
+    localBrowserInstance = setupBrowserInstance
+    return ShoppingLoginPage(localBrowserInstance.page, localBrowserInstance.baseUrl)
+
+
 
 
 

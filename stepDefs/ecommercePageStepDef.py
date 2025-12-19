@@ -1,6 +1,7 @@
 import time
 from platform import AndroidVer
 
+from playwright.sync_api import expect
 from pytest_bdd import given, when, then, parsers
 
 from conftest import getCommonClass
@@ -43,12 +44,14 @@ def validatePrices(getEcommercePage: EcommercePage, getCommonClass: Common):
     print("Text is: "+ text)
 
     getEcommercePage.getTotalPrice()
-
-@then('select the country submit and verify Thank You message')
-def placeOrderAndSelectCountry(getEcommercePage:EcommercePage):
+@then(parsers.parse('select the country {country} submit and verify Thank You message'))
+#@then('select the country submit and verify Thank You message')
+def placeOrderAndSelectCountry(getEcommercePage:EcommercePage, country):
     getEcommercePage.clickPlaceOrderButton()
-    getEcommercePage.selectCountry()
+    getEcommercePage.selectCountry(country)
+    getEcommercePage.tickTermsAndConditionsAndProceed()
 
+    expect(getEcommercePage.page.get_by_text("Thank you")).to_be_visible()
 
     # For debugging. Remove later
     time.sleep(2)

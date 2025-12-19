@@ -15,6 +15,8 @@ class EcommercePage:
         self.basketIcon = self.page.locator("[class='cart-icon']")
         self.proceedToCheckoutIcon = self.page.get_by_role("button", name="PROCEED TO CHECKOUT")
         self.placeOrderButton = self.page.get_by_role("button", name="Place Order")
+        self.termsAndConditionsCheckbox  = self.page.locator("[class='chkAgree']")
+        self.proceedButton = self.page.get_by_role("button", name="Proceed")
 
     def navigateToEcommercePage(self):
         self.page.goto(self.baseUrl + "seleniumPractise/#/")
@@ -100,6 +102,9 @@ class EcommercePage:
     def clickPlaceOrderButton(self):
         self.placeOrderButton.click()
 
-    #Parameterise this later
-    def selectCountry(self):
-        self.page.select_option("div select", "Albania")
+    def selectCountry(self, country):
+        self.page.select_option("div select", country)
+
+    def tickTermsAndConditionsAndProceed(self):
+        self.termsAndConditionsCheckbox.check()
+        self.proceedButton.click()

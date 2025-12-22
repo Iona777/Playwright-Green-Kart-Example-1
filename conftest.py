@@ -80,7 +80,7 @@ def getCommonClass(setupBrowserInstance):
     return  Common(localBrowserInstance.page)
 
 #Add similar for the other pages as required.
-
+@pytest.fixture()
 def getShoppingLoginPage(setupBrowserInstance):
     localBrowserInstance = setupBrowserInstance
     return ShoppingLoginPage(localBrowserInstance.page, localBrowserInstance.baseUrl)

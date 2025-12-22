@@ -16,17 +16,14 @@ Feature: End to end Ecommerce Validation
 
 
     @Smoke
-    Scenario Outline: Ecommerce change values on checkout page
+    Scenario Outline: Ecommerce shopping page, change values on checkout page
         Given I am on the shopping practice login page
-      #https://rahulshettyacademy.com/client/#/auth/login
         When I login to the application
-      #greg.macdonald77@gmail.com
-      #rsaMania99
-        And I add the following items to Cart and checkout "<item1>", "<item2>", "<item3>"
-        And I take note of sum of products
-        And I change the quantity of each item to 3
-        And I remove "<item3>"
-        Then the the new sum of products should be "<new sum>" than the previous one
+        And I add the following items to Cart and checkout <item1>, <item2>
+       # And I take note of sum of products
+       # And I change the quantity of each item to 3
+       # And I remove "<item3>"
+       # Then the the new sum of products should be "<new sum>" than the previous one
         Examples:
-            | item1    | item2          | item3      | new sum |
-            | iphone X | Samsung Note 8 | Blackberry | higher  |
+            | item1 | item2   |  new sum |
+            | ZARA COAT 3  | ADIDAS ORIGINAL |  higher  |

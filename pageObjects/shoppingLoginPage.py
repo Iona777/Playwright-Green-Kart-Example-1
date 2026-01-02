@@ -11,6 +11,7 @@ class ShoppingLoginPage:
         self.password = page.locator('#userPassword')
         self.loginButton = page.locator("[class ='btn btn-block login-btn']")
         self.productCards = page.locator("[class='card'] [class ='card-body']")
+        self.sumOfProdcuts = 0
 
     def navigateToShoppingLoginPage(self):
         self.page.goto(self.baseURL + "client/#/auth/login")
@@ -24,6 +25,25 @@ class ShoppingLoginPage:
          product = self.productCards.filter(has_text=productText)
          productButton = product.locator("button", has_text="Add To Cart")
          productButton.click()
+
+    def selectShoppingCart(self):
+        #In this case, using the value of routerlink is the most reliable.
+        self.page.locator('button[routerlink="/dashboard/cart"]').click()
+
+    def getValueOfTotal(self):
+        #page.locator("li.totalRow") - this gets all the totalRow elements
+        #filter(has_text="Total") - filters on just those that have text "Total", ie. gets rid of the "Subtotal" ones
+        #.first returns the first element with text = "Total". Required to avoid Playwright strict‑mode violation,
+        #It could be that angular added some hidden duplicate elements.
+        #.locator(".value").text_content() - then finds the child element with class containing "Value" and
+        #finally returns the text value.
+        self.sumOfProdcuts = (self.page.locator("li.totalRow")
+                              .filter(has_text="Total").first
+                              .locator(".value")
+                              .text_content())
+        #Strip out the currency symbol and convert to a float.
+        self.sumOfProdcuts = float(self.sumOfProdcuts.replace("$", ""))
+        print(f"SUM OF PRODUCTS IS:  {self.sumOfProdcuts}")
 
 
 

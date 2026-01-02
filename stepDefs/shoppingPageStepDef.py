@@ -2,6 +2,7 @@ import time
 
 from pytest_bdd import given, when, parsers
 
+from conftest import getShoppingLoginPage
 from pageObjects.shoppingLoginPage import ShoppingLoginPage
 
 
@@ -13,12 +14,18 @@ def navigateToShoppingPage(getShoppingLoginPage:ShoppingLoginPage):
 def loginToShoppingPage(getShoppingLoginPage:ShoppingLoginPage):
     getShoppingLoginPage.loginToShoppingPage("greg.macdonald77@gmail.com","rsaMania99")
 
-#@when(parsers.parse('I add the following items to Cart and checkout {item1}, {item2}, {item3}'))
 @when(parsers.parse('I add the following items to Cart and checkout {item1}, {item2}'))
 def addItemsToCart(getShoppingLoginPage:ShoppingLoginPage,item1, item2):
     getShoppingLoginPage.selectProduct(item1)
     getShoppingLoginPage.selectProduct(item2)
-    
+
+@when('I take note of sum of products')
+def takeNoteOfSumOfProducts(getShoppingLoginPage):
+    getShoppingLoginPage.selectShoppingCart()
+    getShoppingLoginPage.getValueOfTotal()
+
+
+
     # For debugging. Remove later
     time.sleep(5)
 

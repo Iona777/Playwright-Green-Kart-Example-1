@@ -21,8 +21,7 @@ Feature: End to end Ecommerce Validation
         When I login to the application
         And I add the following items to Cart and checkout <item1>, <item2>
         And I take note of sum of products
-       # And I change the quantity of each item to 3
-       # And I remove "<item2>"
+        And I remove <item2>
        # Then the the new sum of products should be "<new sum>" than the previous one
         Examples:
             | item1 | item2   |  new sum |

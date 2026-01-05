@@ -24,6 +24,13 @@ def takeNoteOfSumOfProducts(getShoppingLoginPage):
     getShoppingLoginPage.selectShoppingCart()
     getShoppingLoginPage.getValueOfTotal()
 
+@when(parsers.parse('I remove {item2}'))
+def removeGivenItem(getShoppingLoginPage,item2):
+    getShoppingLoginPage.removeAnItem(item2)
+
+    
+
+
 
 
     # For debugging. Remove later

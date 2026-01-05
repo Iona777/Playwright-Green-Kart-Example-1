@@ -45,6 +45,13 @@ class ShoppingLoginPage:
         self.sumOfProdcuts = float(self.sumOfProdcuts.replace("$", ""))
         print(f"SUM OF PRODUCTS IS:  {self.sumOfProdcuts}")
 
+    def removeAnItem(self, itemToRemove):
+         deleteItemButton = (self.page.locator("li.items")
+                             .filter(has_text=itemToRemove)
+                             .locator("[class='fa fa-trash-o']"))
+
+         deleteItemButton.click()
+
 
 
 

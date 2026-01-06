@@ -22,7 +22,7 @@ Feature: End to end Ecommerce Validation
         And I add the following items to Cart and checkout <item1>, <item2>
         And I take note of sum of products
         And I remove <item2>
-       # Then the the new sum of products should be "<new sum>" than the previous one
+        Then the the new sum of products should be <newSum> than the previous one
         Examples:
-            | item1 | item2   |  new sum |
-            | ZARA COAT 3  | ADIDAS ORIGINAL |  higher  |
+            | item1         | item2           |  newSum  |
+            | ZARA COAT 3   | ADIDAS ORIGINAL |  lower    |

@@ -64,6 +64,9 @@ def setupBrowserInstance(playwright:Playwright, request):
     # or like this if passing in base_url too
     # pytest test_testFileName.py - -browser_name chrome --base_url https: // rahulshettyacademy.com
 
+@pytest.fixture()
+def sharedData():
+    return {}
 
 @pytest.fixture
 #Calls the EcommercePage constructor and returns an instance of the page object.

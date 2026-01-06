@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="cb70cf5d-eb30-4f88-abdf-ef9cda16e645" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/conftest.py" beforeDir="false" afterPath="$PROJECT_DIR$/conftest.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/features/eCommerce.feature" beforeDir="false" afterPath="$PROJECT_DIR$/features/eCommerce.feature" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pageObjects/shoppingLoginPage.py" beforeDir="false" afterPath="$PROJECT_DIR$/pageObjects/shoppingLoginPage.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/stepDefs/shoppingPageStepDef.py" beforeDir="false" afterPath="$PROJECT_DIR$/stepDefs/shoppingPageStepDef.py" afterDir="false" />
@@ -121,7 +122,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/pageObjects/shoppingLoginPage.py</url>
-          <line>24</line>
+          <line>23</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>

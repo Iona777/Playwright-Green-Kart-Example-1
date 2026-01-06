@@ -11,7 +11,6 @@ class ShoppingLoginPage:
         self.password = page.locator('#userPassword')
         self.loginButton = page.locator("[class ='btn btn-block login-btn']")
         self.productCards = page.locator("[class='card'] [class ='card-body']")
-        self.sumOfProdcuts = 0
 
     def navigateToShoppingLoginPage(self):
         self.page.goto(self.baseURL + "client/#/auth/login")
@@ -37,20 +36,35 @@ class ShoppingLoginPage:
         #It could be that angular added some hidden duplicate elements.
         #.locator(".value").text_content() - then finds the child element with class containing "Value" and
         #finally returns the text value.
-        self.sumOfProdcuts = (self.page.locator("li.totalRow")
+        sumOfProdcuts = (self.page.locator("li.totalRow")
                               .filter(has_text="Total").first
                               .locator(".value")
                               .text_content())
         #Strip out the currency symbol and convert to a float.
-        self.sumOfProdcuts = float(self.sumOfProdcuts.replace("$", ""))
-        print(f"SUM OF PRODUCTS IS:  {self.sumOfProdcuts}")
+        sumOfProdcuts = float(sumOfProdcuts.replace("$", ""))
+
+        print(f"SUM OF PRODUCTS IS:  {sumOfProdcuts}")
+
+        return sumOfProdcuts
 
     def removeAnItem(self, itemToRemove):
-         deleteItemButton = (self.page.locator("li.items")
+        deleteItemButton = (self.page.locator("li.items")
                              .filter(has_text=itemToRemove)
                              .locator("[class='fa fa-trash-o']"))
 
-         deleteItemButton.click()
+        deleteItemButton.click()
+        #The page does not refresh automatically after clicking the button.
+        self.page.reload()
+
+    def getTotalRowValue(self):
+        #Gets the 2nd matching element and returns its text value
+        totalRowValue = self.page.locator("[class='totalRow'] [class='value']").nth(1).text_content()
+        totalRowValue = float( totalRowValue.replace("$", ""))
+        print(f"Total value now is: {totalRowValue}")
+
+        return totalRowValue
+
+
 
 
 

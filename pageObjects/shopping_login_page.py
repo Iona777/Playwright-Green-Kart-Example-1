@@ -10,7 +10,14 @@ class ShoppingLoginPage:
         self.email = page.locator('#userEmail')
         self.password = page.locator('#userPassword')
         self.loginButton = page.locator("[class ='btn btn-block login-btn']")
+
         self.productCards = page.locator("[class='card'] [class ='card-body']")
+        #Can also store complicated locators like this
+        self.sumOfProducts = (
+            self.page.locator("li.totalRow")
+            .filter(has_text="Total").first
+            .locator(".value")
+        )
 
     def navigateToShoppingLoginPage(self):
         self.page.goto(self.baseURL + "client/#/auth/login")
@@ -22,7 +29,7 @@ class ShoppingLoginPage:
 
     def selectProduct(self, productText):
          product = self.productCards.filter(has_text=productText)
-         productButton = product.locator("button", has_text="Add To Cart")
+         productButton = product.locator("button", has_text="Add To Cart").first
          productButton.click()
 
     def selectShoppingCart(self):
@@ -36,23 +43,35 @@ class ShoppingLoginPage:
         #It could be that angular added some hidden duplicate elements.
         #.locator(".value").text_content() - then finds the child element with class containing "Value" and
         #finally returns the text value.
-        sumOfProdcuts = (self.page.locator("li.totalRow")
-                              .filter(has_text="Total").first
-                              .locator(".value")
-                              .text_content())
+
+        #This has now been moved to the constructor as a locator.
+        # sumOfProdcuts = (self.page.locator("li.totalRow")Te
+        #                       .filter(has_text="Total").first
+        #                       .locator(".value")
+        #                       .text_content())
+
+        valueOfTotal= self.sumOfProducts.text_content()
         #Strip out the currency symbol and convert to a float.
-        sumOfProdcuts = float(sumOfProdcuts.replace("$", ""))
+        valueOfTotal = float(valueOfTotal.replace("$", ""))
 
-        print(f"SUM OF PRODUCTS IS:  {sumOfProdcuts}")
+        print(f"TOTAL VALUE IS:  {valueOfTotal}")
 
-        return sumOfProdcuts
+        return valueOfTotal
+
+    #Because of the parmeter involved, deleteItemButton locator cannot be a property in the constructor
+    #So, use a method to return the locator. If locator changes, only needs updating on 1 place.
+    def getDeleteButton(self, itemToRemove):
+        deleteItemButton = (self.page.locator("li.items")
+                            .filter(has_text=itemToRemove)
+                            .locator("[class='fa fa-trash-o']"))
+
+        return deleteItemButton
+
 
     def removeAnItem(self, itemToRemove):
-        deleteItemButton = (self.page.locator("li.items")
-                             .filter(has_text=itemToRemove)
-                             .locator("[class='fa fa-trash-o']"))
-
+        deleteItemButton = self.getDeleteButton(itemToRemove)
         deleteItemButton.click()
+
         #The page does not refresh automatically after clicking the button.
         self.page.reload()
 

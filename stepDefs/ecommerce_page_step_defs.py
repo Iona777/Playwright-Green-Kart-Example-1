@@ -5,7 +5,11 @@ from playwright.sync_api import expect
 from pytest_bdd import given, when, then, parsers
 
 from conftest import getCommonClass
-from pageObjects.ecommercePage import EcommercePage
+#You need both the folder name and file name followed by import class name
+
+from pageObjects.ecommerce_country_page import EcommerceCountryPage
+from pageObjects.ecommerce_cart_page import EcommerceCartPage
+from pageObjects.ecommerce_page import EcommercePage
 from utilities.common import Common
 
 
@@ -34,27 +38,27 @@ def proceedToCheckout(getEcommercePage: EcommercePage):
 
 @then('I validate the total prices')
 #Might want to create a different page object for this later
-def validatePrices(getEcommercePage: EcommercePage, getCommonClass: Common):
-
-
+def validatePrices(getEcommerceCartPage: EcommerceCartPage,getCommonClass: Common):
     #This is just here as an example of how to call a method from the Common class in utilities.common
     #The getCommonClass fixture returns an instance of Common in the same way as getEcommercePage returns
     # an instance of the EcommercePage class.
     text =  getCommonClass.getNthColumnOfNthRow("[class='cartTable'] tr",1,1)
     print("Text is: "+ text)
+    getEcommerceCartPage.getTotalPrice()
 
-    getEcommercePage.getTotalPrice()
+
 @then(parsers.parse('select the country {country} submit and verify Thank You message'))
 #@then('select the country submit and verify Thank You message')
-def placeOrderAndSelectCountry(getEcommercePage:EcommercePage, country):
-    getEcommercePage.clickPlaceOrderButton()
-    getEcommercePage.selectCountry(country)
-    getEcommercePage.tickTermsAndConditionsAndProceed()
+def placeOrderAndSelectCountry(getEcommerceCartPage: EcommerceCartPage ,getEcommerceCountryPage:EcommerceCountryPage, country):
 
-    expect(getEcommercePage.page.get_by_text("Thank you")).to_be_visible()
+    getEcommerceCartPage.clickPlaceOrderButton()
+
+    getEcommerceCountryPage.selectCountry(country)
+    getEcommerceCountryPage.tickTermsAndConditionsAndProceed()
+    expect(getEcommerceCountryPage.page.get_by_text("Thank you")).to_be_visible()
 
     # For debugging. Remove later
-    time.sleep(2)
+    time.sleep(1)
 
 
 

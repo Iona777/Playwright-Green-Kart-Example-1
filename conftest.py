@@ -1,8 +1,12 @@
 import pytest
 from playwright.sync_api import Playwright
 from collections import namedtuple
-from pageObjects.ecommercePage import EcommercePage
-from pageObjects.shoppingLoginPage import ShoppingLoginPage
+
+from pageObjects.ecommerce_country_page import EcommerceCountryPage
+from pageObjects.ecommerce_page import EcommercePage
+from pageObjects.ecommerce_cart_page import EcommerceCartPage
+from pageObjects.shopping_dashboard_page import ShoppingDashboardPage
+from pageObjects.shopping_login_page import ShoppingLoginPage
 from utilities.common import  Common
 
 #This is a list the Python module paths to of all your stepDef files.
@@ -13,8 +17,8 @@ from utilities.common import  Common
 # __init__.py file, which can be blank.
 
 pytest_plugins = [
-    "stepDefs.ecommercePageStepDef",
-    "stepDefs.shoppingPageStepDef"
+    "stepDefs.ecommerce_page_step_defs",
+    "stepDefs.shopping_page_step_defs"
 
 ]
 
@@ -68,25 +72,45 @@ def setupBrowserInstance(playwright:Playwright, request):
 def sharedData():
     return {}
 
-@pytest.fixture
-#Calls the EcommercePage constructor and returns an instance of the page object.
-#This constructor also needs the baseURL which is local to the setupBrowserInstance() method.
-# So, create a class variable dictionary,scenario_context, and pass the data around that way
-def getEcommercePage(setupBrowserInstance):
-    localBrowserInstance = setupBrowserInstance
-    return EcommercePage(localBrowserInstance.page, localBrowserInstance.baseUrl)
-
 #Calls the Common constructor and returns an instance of the Common class.
 @pytest.fixture
 def getCommonClass(setupBrowserInstance):
     localBrowserInstance = setupBrowserInstance
     return  Common(localBrowserInstance.page)
 
+@pytest.fixture
+#Calls the EcommercePage constructor and returns an instance of the page object.
+#This constructor also needs the baseURL which is local to the setupBrowserInstance() method.
+# So, we use this line above
+# BrowserInstance = namedtuple("BrowserInstance", ["page", "baseUrl"])
+# to, as it were, create a BrowserInstance class,  An instance of this is created and returned #(yielded) by the setupBrowserInstance fixture.
+# Therefore, setupBrowserInstance (and localBrowserInstance below) refers to that yielded instance,
+# and we can access its fields (page and baseUrl) to construct the EcommercePage.
+def getEcommercePage(setupBrowserInstance):
+    localBrowserInstance = setupBrowserInstance
+    return EcommercePage(localBrowserInstance.page, localBrowserInstance.baseUrl)
+
+@pytest.fixture()
+def getEcommerceCartPage(setupBrowserInstance):
+    localBrowserInstance = setupBrowserInstance
+    return EcommerceCartPage(localBrowserInstance.page)
+
+@pytest.fixture()
+def getEcommerceCountryPage(setupBrowserInstance):
+    localBrowserInstance = setupBrowserInstance
+    return EcommerceCountryPage(localBrowserInstance.page)
+
+
 #Add similar for the other pages as required.
 @pytest.fixture()
 def getShoppingLoginPage(setupBrowserInstance):
     localBrowserInstance = setupBrowserInstance
     return ShoppingLoginPage(localBrowserInstance.page, localBrowserInstance.baseUrl)
+
+@pytest.fixture()
+def getShoppingDashboardPage(setupBrowserInstance):
+    localBrowserInstance = setupBrowserInstance
+    return ShoppingDashboardPage(localBrowserInstance.page)
 
 
 

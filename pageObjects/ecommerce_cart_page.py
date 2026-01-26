@@ -5,13 +5,17 @@ class EcommerceCartPage:
 
     def __init__(self,page: Page):
         self.page = page
-
+        #Better to define locators in constructor so a available to all methods in page object
+        self.displayedTotalPrice = self.page.locator("[class='totAmt']")
+        self.placeOrderButton = self.page.get_by_role("button", name="Place Order")
 
     def getTotalPrice(self):
         #Wait for the table to be rendered. While Playwright will for elements to be ready before
-        # interacting with them, getting the count does not qualify as interaction, so it does not wait automatically.
-        self.page.wait_for_selector("[class='cartTable'] tr")
-        self.placeOrderButton = self.page.get_by_role("button", name="Place Order")
+        # interacting with them, getting the count does not qualify as interaction, so it does not wait
+        # automatically. Setting state="visible" is stricter than the default which only checks for the
+        #element to be attached to the DOM.
+        self.page.wait_for_selector("[class='cartTable'] tr", state="visible")
+
 
         #How to get the contents of nth row of a table:
         #Find all the rows in the given table and store in a variable, e.g. 'rows'
@@ -33,7 +37,7 @@ class EcommerceCartPage:
 
         print(f"rows is type {type(rows)}")
 
-        totalPrice = 0
+        calculated_totalPrice = 0
 
         #Can't use 'for item in rows' as rows is a selector, not a list.
         #This is equivalent of for i=1 to count;i++
@@ -44,20 +48,21 @@ class EcommerceCartPage:
             print(f"Column text is {price_text}")
             #Need to convert from a string to a number
             price = float(price_text)
-            totalPrice = totalPrice + price
+            calculated_totalPrice = calculated_totalPrice + price
 
-            print(f"Total price is {totalPrice}")
+            print(f"Total price is {calculated_totalPrice}")
 
-        displayedTotalPrice_text = self.page.locator("[class='totAmt']").text_content().strip()
+        displayedTotalPrice_text = self.displayedTotalPrice.text_content().strip()
 
         #If the text contained a currency symbol, then you could strip it out like this:
         #displayedTotalPrice_text = displayedTotalPrice_text.replace("£", "").strip()
 
-        displayedTotalPrice = float(displayedTotalPrice_text)
+        #Need to convert to float so can use as a number
+        displayedTotalPriceValue = float(displayedTotalPrice_text)
 
-        print(f"Calculated total price is {totalPrice} and displayed total prices is {displayedTotalPrice}")
-        assert totalPrice == displayedTotalPrice, \
-            (f"Displayed total {displayedTotalPrice} does not match calculated {totalPrice}")
+        print(f"Calculated total price is {calculated_totalPrice} and displayed total prices is {displayedTotalPriceValue}")
+        assert calculated_totalPrice == displayedTotalPriceValue, \
+            (f"Displayed total {displayedTotalPriceValue} does not match calculated {calculated_totalPrice}")
 
     def clickPlaceOrderButton(self):
         self.placeOrderButton.click()

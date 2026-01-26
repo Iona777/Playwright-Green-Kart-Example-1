@@ -73,12 +73,13 @@ def sharedData():
     return {}
 
 #Calls the Common constructor and returns an instance of the Common class.
-@pytest.fixture
+@pytest.fixture()
 def getCommonClass(setupBrowserInstance):
-    localBrowserInstance = setupBrowserInstance
-    return  Common(localBrowserInstance.page)
+    #localBrowserInstance = setupBrowserInstance
+    #Don't need the above variable, can just access the page part of yielded tuple directly
+    return  Common(setupBrowserInstance.page)
 
-@pytest.fixture
+@pytest.fixture()
 #Calls the EcommercePage constructor and returns an instance of the page object.
 #This constructor also needs the baseURL which is local to the setupBrowserInstance() method.
 # So, we use this line above

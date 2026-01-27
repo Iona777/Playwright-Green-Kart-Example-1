@@ -73,6 +73,8 @@ def sharedData():
     return {}
 
 #Calls the Common constructor and returns an instance of the Common class.
+#This is not currently required as common class does is not actually a page object
+#If it eer
 @pytest.fixture()
 def getCommonClass(setupBrowserInstance):
     #localBrowserInstance = setupBrowserInstance

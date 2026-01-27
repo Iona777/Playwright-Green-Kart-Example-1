@@ -45,7 +45,7 @@ class ShoppingDashboardPage:
 
         return valueOfTotal
 
-    #Because of the parmeter involved, deleteItemButton locator cannot be a property in the constructor
+    #Because of the parameter involved, deleteItemButton locator cannot be a property in the constructor
     #So, use a method to return the locator. If locator changes, only needs updating on 1 place.
     def getDeleteButton(self, itemToRemove):
         deleteItemButton = (self.page.locator("li.items")

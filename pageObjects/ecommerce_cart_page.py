@@ -1,20 +1,42 @@
 from playwright.sync_api import Page
+from pageObjects.base_page import BasePage
+
 
 #Class names need to start in upper case or python gets mixed up
-class EcommerceCartPage:
+class EcommerceCartPage(BasePage):
+    #Use constants where locators are only strings. Pass a parameters to self.page.locator()
+    CART_TABLE = "[class='cartTable'] tr"
+    DISPLAYED_TOTAL_PRICE = "[class='totAmt']"
+    PLACE_ORDER_NAME = "Place Order"
 
     def __init__(self,page: Page):
-        self.page = page
-        #Better to define locators in constructor so a available to all methods in page object
-        self.displayedTotalPrice = self.page.locator("[class='totAmt']")
-        self.placeOrderButton = self.page.get_by_role("button", name="Place Order")
+        #Don't technically need a constructor here as it inherits on from BasePage. However, if I ever need to add
+        # more lines to this constructor then I will need it and also super(). This future proofs this.
+        super().__init__(page)
 
-    def getTotalPrice(self):
+    #Use properties where the locator i smore complicated and needs self.page. This will return a locator,
+    # so need nee dot use self.page() again when using this.
+    @property
+    def place_order_button(self):
+        return self.page.get_by_role("button", name=self.PLACE_ORDER_NAME)
+
+
+    #Although the tests do not really need it, here is an example of how to call a method from the
+    # common clas within a page object. The BasePage class calls the constructor fo Common class and
+    # makes it available to any page objects that inherit from BasePage
+    def get_first_item_price(self):
+        return self.common.get_nth_column_of_nth_row(
+            self.CART_TABLE,
+            row_index=1,
+            col_index=1
+        )
+
+    def validate_total_price(self):
         #Wait for the table to be rendered. While Playwright will for elements to be ready before
         # interacting with them, getting the count does not qualify as interaction, so it does not wait
         # automatically. Setting state="visible" is stricter than the default which only checks for the
         #element to be attached to the DOM.
-        self.page.wait_for_selector("[class='cartTable'] tr", state="visible")
+        self.page.wait_for_selector(self.CART_TABLE, state="visible")
 
 
         #How to get the contents of nth row of a table:
@@ -31,38 +53,32 @@ class EcommerceCartPage:
         #Loop round them using rows.nth(i) as a pointer to the current row
         #Use  locator("td").nth() on current row to get its contents.
 
-        rows = self.page.locator("[class='cartTable'] tr")
+        rows = self.page.locator(self.CART_TABLE)
         count = rows.count()
-        print(f"Number of rows, including header, is {count}")
 
-        print(f"rows is type {type(rows)}")
-
-        calculated_totalPrice = 0
+        calculated_total_price = 0
 
         #Can't use 'for item in rows' as rows is a selector, not a list.
         #This is equivalent of for i=1 to count;i++
         for i in range(1, count):  # skip header row
             #get the 3rd column value
-            theRow = rows.nth(i)
-            price_text = theRow.locator("td").nth(3).text_content().strip()
+            the_row = rows.nth(i)
+            price_text = the_row.locator("td").nth(3).text_content().strip()
             print(f"Column text is {price_text}")
             #Need to convert from a string to a number
             price = float(price_text)
-            calculated_totalPrice = calculated_totalPrice + price
+            calculated_total_price = calculated_total_price + price
 
-            print(f"Total price is {calculated_totalPrice}")
-
-        displayedTotalPrice_text = self.displayedTotalPrice.text_content().strip()
+        displayed_total_price_text = self.page.locator(self.DISPLAYED_TOTAL_PRICE).text_content().strip()
 
         #If the text contained a currency symbol, then you could strip it out like this:
         #displayedTotalPrice_text = displayedTotalPrice_text.replace("£", "").strip()
 
         #Need to convert to float so can use as a number
-        displayedTotalPriceValue = float(displayedTotalPrice_text)
+        displayed_total_price_value = float(displayed_total_price_text)
 
-        print(f"Calculated total price is {calculated_totalPrice} and displayed total prices is {displayedTotalPriceValue}")
-        assert calculated_totalPrice == displayedTotalPriceValue, \
-            (f"Displayed total {displayedTotalPriceValue} does not match calculated {calculated_totalPrice}")
+        assert calculated_total_price == displayed_total_price_value, \
+            (f"Displayed total {displayed_total_price_value} does not match calculated {calculated_total_price}")
 
-    def clickPlaceOrderButton(self):
-        self.placeOrderButton.click()
+    def click_place_order_button(self):
+        self.place_order_button.click()

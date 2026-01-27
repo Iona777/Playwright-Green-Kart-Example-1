@@ -7,11 +7,13 @@ class Common:
 
 
     # Returns the text of the given table, row, column. Zero referenced
-    def getNthColumnOfNthRow(self, tableSelector: str, row: int, column: int):
-        self.page.wait_for_selector(tableSelector)
-
-        rows = self.page.locator(tableSelector)
-        theRow = rows.nth(row)
-        text = theRow.locator("td").nth(column).text_content().strip()
+    def get_nth_column_of_nth_row(self, table_locator: str, row_index: int, col_index: int):
+        self.page.wait_for_selector(table_locator, state="visible")
+        rows = self.page.locator(table_locator)
+        the_row = rows.nth(row_index)
+        cols = the_row.locator("td")
+        the_col = cols.nth(col_index)
+        text = the_col.text_content().strip()
 
         return text
+

@@ -4,7 +4,7 @@ from platform import AndroidVer
 from playwright.sync_api import expect
 from pytest_bdd import given, when, then, parsers
 
-from conftest import getCommonClass
+#from conftest import getCommonClass
 #You need both the folder name and file name followed by import class name
 
 from pageObjects.ecommerce_country_page import EcommerceCountryPage
@@ -42,16 +42,16 @@ def validatePrices(getEcommerceCartPage: EcommerceCartPage,getCommonClass: Commo
     #This is just here as an example of how to call a method from the Common class in utilities.common
     #The getCommonClass fixture returns an instance of Common in the same way as getEcommercePage returns
     # an instance of the EcommercePage class.
-    text =  getCommonClass.getNthColumnOfNthRow("[class='cartTable'] tr",1,1)
+    text =  getCommonClass.get_nth_column_of_nth_row("[class='cartTable'] tr", 1, 1)
     print("Text is: "+ text)
-    getEcommerceCartPage.getTotalPrice()
+    getEcommerceCartPage.validate_total_price()
 
 
 @then(parsers.parse('select the country {country} submit and verify Thank You message'))
 #@then('select the country submit and verify Thank You message')
 def placeOrderAndSelectCountry(getEcommerceCartPage: EcommerceCartPage ,getEcommerceCountryPage:EcommerceCountryPage, country):
 
-    getEcommerceCartPage.clickPlaceOrderButton()
+    getEcommerceCartPage.click_place_order_button()
 
     getEcommerceCountryPage.selectCountry(country)
     getEcommerceCountryPage.tickTermsAndConditionsAndProceed()

@@ -27,63 +27,6 @@ class ShoppingLoginPage:
         self.password.type(password)
         self.loginButton.click()
 
-    def selectProduct(self, productText):
-         product = self.productCards.filter(has_text=productText)
-         productButton = product.locator("button", has_text="Add To Cart").first
-         productButton.click()
-
-    def selectShoppingCart(self):
-        #In this case, using the value of routerlink is the most reliable.
-        self.page.locator('button[routerlink="/dashboard/cart"]').click()
-
-    def getValueOfTotal(self):
-        #page.locator("li.totalRow") - this gets all the totalRow elements
-        #filter(has_text="Total") - filters on just those that have text "Total", ie. gets rid of the "Subtotal" ones
-        #.first returns the first element with text = "Total". Required to avoid Playwright strict‑mode violation,
-        #It could be that angular added some hidden duplicate elements.
-        #.locator(".value").text_content() - then finds the child element with class containing "Value" and
-        #finally returns the text value.
-
-        #This has now been moved to the constructor as a locator.
-        # sumOfProdcuts = (self.page.locator("li.totalRow")Te
-        #                       .filter(has_text="Total").first
-        #                       .locator(".value")
-        #                       .text_content())
-
-        valueOfTotal= self.sumOfProducts.text_content()
-        #Strip out the currency symbol and convert to a float.
-        valueOfTotal = float(valueOfTotal.replace("$", ""))
-
-        print(f"TOTAL VALUE IS:  {valueOfTotal}")
-
-        return valueOfTotal
-
-    #Because of the parmeter involved, deleteItemButton locator cannot be a property in the constructor
-    #So, use a method to return the locator. If locator changes, only needs updating on 1 place.
-    def getDeleteButton(self, itemToRemove):
-        deleteItemButton = (self.page.locator("li.items")
-                            .filter(has_text=itemToRemove)
-                            .locator("[class='fa fa-trash-o']"))
-
-        return deleteItemButton
-
-
-    def removeAnItem(self, itemToRemove):
-        deleteItemButton = self.getDeleteButton(itemToRemove)
-        deleteItemButton.click()
-
-        #The page does not refresh automatically after clicking the button.
-        self.page.reload()
-
-    def getTotalRowValue(self):
-        #Gets the 2nd matching element and returns its text value
-        totalRowValue = self.page.locator("[class='totalRow'] [class='value']").nth(1).text_content()
-        totalRowValue = float( totalRowValue.replace("$", ""))
-        print(f"Total value now is: {totalRowValue}")
-
-        return totalRowValue
-
-
 
 
 

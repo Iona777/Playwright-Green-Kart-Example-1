@@ -6,13 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="cb70cf5d-eb30-4f88-abdf-ef9cda16e645" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/conftest.py" beforeDir="false" afterPath="$PROJECT_DIR$/conftest.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pageObjects/ecommerce_cart_page.py" beforeDir="false" afterPath="$PROJECT_DIR$/pageObjects/ecommerce_cart_page.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pageObjects/ecommerce_country_page.py" beforeDir="false" afterPath="$PROJECT_DIR$/pageObjects/ecommerce_country_page.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pageObjects/ecommerce_page.py" beforeDir="false" afterPath="$PROJECT_DIR$/pageObjects/ecommerce_page.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pageObjects/shopping_dashboard_page.py" beforeDir="false" afterPath="$PROJECT_DIR$/pageObjects/shopping_dashboard_page.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pageObjects/shopping_login_page.py" beforeDir="false" afterPath="$PROJECT_DIR$/pageObjects/shopping_login_page.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stepDefs/ecommerce_page_step_defs.py" beforeDir="false" afterPath="$PROJECT_DIR$/stepDefs/ecommerce_page_step_defs.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utilities/common.py" beforeDir="false" afterPath="$PROJECT_DIR$/utilities/common.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stepDefs/shopping_page_step_defs.py" beforeDir="false" afterPath="$PROJECT_DIR$/stepDefs/shopping_page_step_defs.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,25 +39,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "Python tests.Python tests in test_ecommerce.py.executor": "Run",
-    "Python tests.Python tests in test_runner.py.executor": "Run",
-    "Python tests.Python tests in test_shoppingPage.py.executor": "Run",
-    "Python tests.Python tests in test_shopping_page.py.executor": "Run",
-    "Python tests.Python tests in test_shpppingPage.py.executor": "Run",
-    "Python.ecommerce_page_step_defs.executor": "Run",
-    "Python.run_all_tests.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/Users/gregm/PycharmProjects/GreenKart",
-    "settings.editor.selected.configurable": "preferences.keymap"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Python tests.Python tests in test_ecommerce.py.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests in test_runner.py.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests in test_shoppingPage.py.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests in test_shopping_page.py.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests in test_shpppingPage.py.executor&quot;: &quot;Run&quot;,
+    &quot;Python.ecommerce_page_step_defs.executor&quot;: &quot;Run&quot;,
+    &quot;Python.run_all_tests.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/gregm/PycharmProjects/GreenKart&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;
   }
-}]]></component>
-  <component name="RunManager" selected="Python tests.Python tests in test_ecommerce.py">
+}</component>
+  <component name="RunManager" selected="Python tests.Python tests in test_shopping_page.py">
     <configuration name="ecommerce_page_step_defs" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="GreenKark" />
       <option name="ENV_FILES" value="" />
@@ -150,8 +149,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python tests.Python tests in test_ecommerce.py" />
         <item itemvalue="Python tests.Python tests in test_shopping_page.py" />
+        <item itemvalue="Python tests.Python tests in test_ecommerce.py" />
         <item itemvalue="Python.ecommerce_page_step_defs" />
         <item itemvalue="Python.run_all_tests" />
         <item itemvalue="Python tests.Python tests in run_all_tests.py" />

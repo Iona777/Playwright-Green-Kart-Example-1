@@ -4,7 +4,7 @@ from pageObjects.base_page import BasePage
 
 #Class names need to start in upper case or python gets mixed up
 class EcommerceCartPage(BasePage):
-    #Use constants where locators are only strings. Pass a parameters to self.page.locator()
+    #Use constants where locators are only strings. Pass as parameters to self.page.locator()
     CART_TABLE = "[class='cartTable'] tr"
     DISPLAYED_TOTAL_PRICE = "[class='totAmt']"
     PLACE_ORDER_NAME = "Place Order"

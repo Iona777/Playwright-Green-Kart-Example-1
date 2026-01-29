@@ -14,27 +14,27 @@ def loginToShoppingPage(getShoppingLoginPage:ShoppingLoginPage):
     getShoppingLoginPage.loginToShoppingPage("greg.macdonald77@gmail.com","rsaMania99")
 
 @when(parsers.parse('I add the following items to Cart and checkout {item1}, {item2}'))
-def addItemsToCart(getShoppingDashboardPage:ShoppingLoginPage,item1, item2):
+def addItemsToCart(getShoppingDashboardPage:ShoppingDashboardPage,item1, item2):
 
-    getShoppingDashboardPage.selectProduct(item1)
-    getShoppingDashboardPage.selectProduct(item2)
+    getShoppingDashboardPage.select_product(item1)
+    getShoppingDashboardPage.select_product(item2)
 
 @when('I take note of sum of products')
 def takeNoteOfSumOfProducts(getShoppingDashboardPage:ShoppingDashboardPage,sharedData):
-    getShoppingDashboardPage.selectShoppingCart()
+    getShoppingDashboardPage.select_shopping_cart()
 
-    sumOfProducts = getShoppingDashboardPage.getValueOfTotal()
+    sumOfProducts = getShoppingDashboardPage.get_value_of_total()
     # Store sumOfProducts in sharedData so it can be passed around
     sharedData["sumOfProducts"] = sumOfProducts
 
 @when(parsers.parse('I remove {item2}'))
 def removeGivenItem(getShoppingDashboardPage:ShoppingDashboardPage,item2):
-    getShoppingDashboardPage.removeAnItem(item2)
+    getShoppingDashboardPage.remove_an_item(item2)
 
 
 @then(parsers.parse('the the new sum of products should be {newSum} than the previous one'))
 def checkNewSum(getShoppingDashboardPage:ShoppingDashboardPage, newSum, sharedData):
-    newTotal = getShoppingDashboardPage.getTotalRowValue()
+    newTotal = getShoppingDashboardPage.get_total_row_value()
 
     if (newSum == "higher"):
         assert newTotal > sharedData["sumOfProducts"]

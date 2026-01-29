@@ -1,5 +1,3 @@
-import time
-
 from playwright.sync_api import Playwright, Page, expect, Locator
 
 
@@ -8,14 +6,17 @@ class EcommercePage:
     #By importing Page and including page:Page instead of just page, we will not get a list of available
     # methods for Page.
 
+    BASKET_ICON = "[class='cart-icon']"
+    ITEM_LOCATOR_PRODUCT_CLASSES = "[class='product']"
+
     def __init__(self, page: Page, baseUrl):
         self.page = page
         self.baseUrl = baseUrl
-        #Locators
-        self.basketIcon = self.page.locator("[class='cart-icon']")
-        self.proceedToCheckoutIcon = self.page.get_by_role("button", name="PROCEED TO CHECKOUT")
 
-        self.itemLocatorProductClasses = "[class='product']"
+    @property
+    def proceed_to_checkout_icon(self):
+        return self.page.get_by_role("button", name="PROCEED TO CHECKOUT")
+
 
     def navigateToEcommercePage(self):
         self.page.goto(self.baseUrl + "seleniumPractise/#/")
@@ -24,7 +25,7 @@ class EcommercePage:
         #Get all the products
         #Need to get the product class, not the product-name class as we need to be high enough up
         # the hierarchy for it to also contain te button that we access in a few lines time.
-        products = self.page.locator(self.itemLocatorProductClasses)
+        products = self.page.locator(self.ITEM_LOCATOR_PRODUCT_CLASSES)
         print("Type of products is ", type(products))
 
         #Now we filter that list on the text of the item we are looking for.
@@ -33,7 +34,7 @@ class EcommercePage:
         item = products.filter(has_text=itemText)
         print("Type of item is ", type(item))
 
-        # Assert uniqueness, not sure we really need this, but it is code AI gave.
+        # Assert uniqueness, not sure why we really need this, but it is code AI gave.
         count = item.count()
         assert count == 1, f"Expected exactly 1 product named '{itemText}', found {count}"
 
@@ -42,8 +43,8 @@ class EcommercePage:
         AddButton.click()
 
     def selectBasket(self):
-        #Using the locators defined in the constructor, similar to Selenium style POM
-        self.basketIcon.click()
-        self.proceedToCheckoutIcon.click()
+        #Using the locators defined at top of class, similar to Selenium style POM. Else use properties.
+        self.page.locator(self.BASKET_ICON).click()
+        self.proceed_to_checkout_icon.click()
 
 

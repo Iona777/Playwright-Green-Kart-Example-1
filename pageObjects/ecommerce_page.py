@@ -42,9 +42,11 @@ class EcommercePage:
         AddButton = item.get_by_role("button", name="ADD TO CART")
         AddButton.click()
 
-    def selectBasket(self):
+    def select_basket(self):
         #Using the locators defined at top of class, similar to Selenium style POM. Else use properties.
         self.page.locator(self.BASKET_ICON).click()
+
+    def proceed_to_checkout(self):
         self.proceed_to_checkout_icon.click()
 
 

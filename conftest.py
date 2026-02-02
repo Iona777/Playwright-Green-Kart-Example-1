@@ -106,12 +106,12 @@ def getEcommerceCountryPage(setupBrowserInstance):
 
 #Add similar for the other pages as required.
 @pytest.fixture()
-def getShoppingLoginPage(setupBrowserInstance):
+def shopping_login_page(setupBrowserInstance):
     localBrowserInstance = setupBrowserInstance
     return ShoppingLoginPage(localBrowserInstance.page, localBrowserInstance.baseUrl)
 
 @pytest.fixture()
-def getShoppingDashboardPage(setupBrowserInstance):
+def shopping_dashboard_page(setupBrowserInstance):
     localBrowserInstance = setupBrowserInstance
     return ShoppingDashboardPage(localBrowserInstance.page)
 

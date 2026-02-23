@@ -9,9 +9,8 @@ class EcommercePage:
     BASKET_ICON = "[class='cart-icon']"
     ITEM_LOCATOR_PRODUCT_CLASSES = "[class='product']"
 
-    def __init__(self, page: Page, baseUrl):
+    def __init__(self, page: Page):
         self.page = page
-        self.baseUrl = baseUrl
 
     @property
     def proceed_to_checkout_icon(self):
@@ -19,7 +18,7 @@ class EcommercePage:
 
 
     def navigateToEcommercePage(self):
-        self.page.goto(self.baseUrl + "seleniumPractise/#/")
+        self.page.goto("seleniumPractise/#/")
 
     def selectAnItem(self, itemText):
         #Get all the products

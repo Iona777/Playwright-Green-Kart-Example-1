@@ -30,24 +30,25 @@ scenario_context = {}
 #NOTE: make sure you have -- in front of the option name or you will get strange errors.
 def pytest_addoption(parser):
     parser.addoption("--browserName", action="store", default="chrome", help="Select the browser")
-    parser.addoption("--baseUrl", action="store", default="https://rahulshettyacademy.com/", help="Set baseUrl")
+    parser.addoption("--baseURL", action="store", default="https://rahulshettyacademy.com/", help="Set baseUrl")
 
 #This is like setting up your driver.
 @pytest.fixture
-def setupBrowserInstance(playwright:Playwright, request):
+def setup_browser_instance(playwright:Playwright, request):
 
     # This will get the option given in the command line.
-    browserName = request.config.getoption("browserName")
-    baseUrl = request.config.getoption("baseUrl")
+    browser_name = request.config.getoption("browserName")
+    base_url_option = request.config.getoption("baseURL")
 
-    if(browserName == "chrome"):
+    if(browser_name.lower() == "chrome"):
         browser = playwright.chromium.launch(headless=False)
-    elif (browserName == "firefox"):
+    elif (browser_name.lower() == "firefox"):
         browser = playwright.firefox.launch(headless=False)
     else:
-        raise ValueError(f"Unsupported browser: {browserName}")
-        
-    context = browser.new_context()
+        raise ValueError(f"Unsupported browser: {browser_name}")
+
+    #Passing in the value for base_url means it is not required in the page object constructors.
+    context = browser.new_context(base_url=base_url_option)
     page = context.new_page()
 
     # This will return the page then it will stop (give way, yield) until the calling test completes.
@@ -57,7 +58,7 @@ def setupBrowserInstance(playwright:Playwright, request):
     # This makes it easier to access the individual parts of BrowserInstance
     BrowserInstance = namedtuple("BrowserInstance", ["page", "baseUrl"])
 
-    yield BrowserInstance(page,baseUrl)
+    yield BrowserInstance(page,base_url_option)
 
     #Teardown
     context.close()
@@ -69,17 +70,17 @@ def setupBrowserInstance(playwright:Playwright, request):
     # pytest test_testFileName.py - -browser_name chrome --base_url https: // rahulshettyacademy.com
 
 @pytest.fixture()
-def sharedData():
+def shared_data():
     return {}
 
 #Calls the Common constructor and returns an instance of the Common class.
 #This is not currently required as common class does is not actually a page object
 #If it eer
 @pytest.fixture()
-def getCommonClass(setupBrowserInstance):
+def get_common_class(setup_browser_instance):
     #localBrowserInstance = setupBrowserInstance
     #Don't need the above variable, can just access the page part of yielded tuple directly
-    return  Common(setupBrowserInstance.page)
+    return  Common(setup_browser_instance.page)
 
 @pytest.fixture()
 #Calls the EcommercePage constructor and returns an instance of the page object.
@@ -89,31 +90,27 @@ def getCommonClass(setupBrowserInstance):
 # to, as it were, create a BrowserInstance class,  An instance of this is created and returned #(yielded) by the setupBrowserInstance fixture.
 # Therefore, setupBrowserInstance (and localBrowserInstance below) refers to that yielded instance,
 # and we can access its fields (page and baseUrl) to construct the EcommercePage.
-def getEcommercePage(setupBrowserInstance):
-    localBrowserInstance = setupBrowserInstance
-    return EcommercePage(localBrowserInstance.page, localBrowserInstance.baseUrl)
+def get_ecommerce_page(setup_browser_instance):
+    localBrowserInstance = setup_browser_instance
+    return EcommercePage(localBrowserInstance.page)
+
+#Don't need to create a localBrowserInstance variable, can just pass page straight from setup_browser_instance
+@pytest.fixture()
+def get_ecommerce_cart_page(setup_browser_instance):
+    return EcommerceCartPage(setup_browser_instance.page)
 
 @pytest.fixture()
-def getEcommerceCartPage(setupBrowserInstance):
-    localBrowserInstance = setupBrowserInstance
-    return EcommerceCartPage(localBrowserInstance.page)
-
-@pytest.fixture()
-def getEcommerceCountryPage(setupBrowserInstance):
-    localBrowserInstance = setupBrowserInstance
-    return EcommerceCountryPage(localBrowserInstance.page)
-
+def get_ecommerce_country_page(setup_browser_instance):
+    return EcommerceCountryPage(setup_browser_instance.page)
 
 #Add similar for the other pages as required.
 @pytest.fixture()
-def shopping_login_page(setupBrowserInstance):
-    localBrowserInstance = setupBrowserInstance
-    return ShoppingLoginPage(localBrowserInstance.page, localBrowserInstance.baseUrl)
+def shopping_login_page(setup_browser_instance):
+    return ShoppingLoginPage(setup_browser_instance.page)
 
 @pytest.fixture()
-def shopping_dashboard_page(setupBrowserInstance):
-    localBrowserInstance = setupBrowserInstance
-    return ShoppingDashboardPage(localBrowserInstance.page)
+def shopping_dashboard_page(setup_browser_instance):
+    return ShoppingDashboardPage(setup_browser_instance.page)
 
 
 

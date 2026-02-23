@@ -7,13 +7,12 @@ class ShoppingLoginPage:
     LOGIN_BUTTON = "[class ='btn btn-block login-btn']"
     PRODUCT_CARDS = "[class='card'] [class ='card-body']"
 
-    def __init__(self, page:Page, baseURL):
+    def __init__(self, page:Page):
         #Make sure you set self.page = page, not Page (i.e. the instance not the class) or you will get odd problems.
         self.page = page
-        self.baseURL = baseURL
 
     def navigateToShoppingLoginPage(self):
-        self.page.goto(self.baseURL + "client/#/auth/login")
+        self.page.goto("client/#/auth/login")
 
     def loginToShoppingPage(self, email, password):
         self.page.locator(self.EMAIL).type(email)

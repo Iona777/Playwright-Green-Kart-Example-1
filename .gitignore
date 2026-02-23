@@ -1,0 +1,53 @@
+# -------------------------
+# Python cache & artifacts
+# -------------------------
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pdb
+*.pkl
+
+# Virtual environments
+venv/
+.env/
+.venv/
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+
+# IDE-specific
+# PyCharm / IntelliJ
+.idea/
+# VSCode
+.vscode/
+
+# -------------------------
+# Playwright
+# -------------------------
+# Browser binaries (installed via `playwright install`)
+playwright/.cache/
+# Test output
+test-results/
+playwright-report/
+blob-report/
+trace.zip
+*.trace.zip
+
+# -------------------------
+# OS-specific clutter
+# -------------------------
+.DS_Store
+Thumbs.db
+
+# -------------------------
+# Logs
+# -------------------------
+*.log
+
+# -------------------------
+# Local scratch / experiments
+# -------------------------
+syntax practice/

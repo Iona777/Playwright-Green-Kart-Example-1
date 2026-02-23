@@ -10,12 +10,13 @@ class EcommerceCartPage(BasePage):
     PLACE_ORDER_NAME = "Place Order"
 
     def __init__(self,page: Page):
-        #Don't technically need a constructor here as it inherits on from BasePage. However, if I ever need to add
-        # more lines to this constructor then I will need it and also super(). This future proofs this.
+        #Don't technically need a constructor here as it inherits one from BasePage.
+        #However, if I ever need to add more lines to this constructor then I will need both this
+        # and super(). This future proofs this.
         super().__init__(page)
 
-    #Use properties where the locator i smore complicated and needs self.page. This will return a locator,
-    # so need nee dot use self.page() again when using this.
+    #Use properties where the locator is more complicated and needs self.page. This will return a locator,
+    # so don't need to use self.page() again when using this.
     @property
     def place_order_button(self):
         return self.page.get_by_role("button", name=self.PLACE_ORDER_NAME)
@@ -32,7 +33,7 @@ class EcommerceCartPage(BasePage):
         )
 
     def validate_total_price(self):
-        #Wait for the table to be rendered. While Playwright will for elements to be ready before
+        #Wait for the table to be rendered. While Playwright will wait for elements to be ready before
         # interacting with them, getting the count does not qualify as interaction, so it does not wait
         # automatically. Setting state="visible" is stricter than the default which only checks for the
         #element to be attached to the DOM.
@@ -41,7 +42,7 @@ class EcommerceCartPage(BasePage):
 
         #How to get the contents of nth row of a table:
         #Find all the rows in the given table and store in a variable, e.g. 'rows'
-        #Get a count of how many rows there are in
+        #Get a count of how many rows there are.
         #Use a for loop in the form
         #for i in range(1,count): # skip header row
         #Get the current row using rows.nth(i) and store in a variable, e.g. 'theRow'

@@ -14,10 +14,10 @@ from pytest_bdd import scenario
 #def test_checkout():
 #    pass
 
-#Or you could just run one scenario per file, this is more likely will developing, with one of the
+#Or you could just run one scenario per file, this is more likely when developing, with one of the
 # other options more likely for production
 @scenario("features/eCommerce.feature", "Ecommerce products delivery")
-def test_ecommerce():
+def test_ecommerce_products():
     pass
 
 

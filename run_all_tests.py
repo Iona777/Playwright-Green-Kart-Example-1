@@ -4,8 +4,8 @@
 
 import pytest
 
-exit_code = pytest.main(["test_ecommerce.py",
-                         "test_shopping_page.py",
+exit_code = pytest.main(["test_ecommerce_products.py",
+                         "test_commerce_shopping.py",
                          "--gherkin-terminal-reporter",
                          "-v"
             ])
